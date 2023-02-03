@@ -7,18 +7,21 @@ import fitz
 import os
 
 
-def find_textbox(page: fitz.Page, keyword: str) -> dict:
+def find_textbox(doc: fitz.Document, page: fitz.Page, keyword: str):
+    page.xref
     info = page.get_text('dict')
+    # print(info)
+    # exit(1)
     if 'blocks' in info:
-        for block in info['blocks']:
+        for i in range(len(info['blocks'])):
+            block = info['blocks'][i]
             if 'lines' in block:
                 for line in block['lines']:
                     if 'spans' in line:
                         for span in line['spans']:
                             text = span.get('text', '').replace(' ', '')
-                            print(span)
                             if text == keyword:
-                                return span
+                                doc._deleteObject(i)
 
 
 # 去除pdf的水印
@@ -44,10 +47,8 @@ def remove_pdf_watermark():
                 pdf_new_file = '../bbb/111.pdf'
                 keyword = '全国团体标准信息平台'
                 for page in doc:
-                    target = find_textbox(page, keyword)
-                    page.add_redact_annot(target['bbox'])
-                    page.apply_redactions()
-
+                    find_textbox(doc, page, keyword)
+                exit(1)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
                 doc.save(pdf_new_file)
