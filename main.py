@@ -27,8 +27,7 @@ def remove_pdf_watermark():
                     os.remove(pdf_file)
                     continue
                 pdf_new_file = '../finish-www.ttbz.org.cn/' + file.replace(file.split("-")[0] + "-", "")
-                print(pdf_new_file)
-                exit(1)
+
                 for pno in range(doc.page_count):
                     page = doc[pno]
                     xref = page.get_contents()[0]
