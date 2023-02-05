@@ -7,26 +7,9 @@ import fitz
 import os
 
 
-def find_textbox(doc: fitz.Document, page: fitz.Page, keyword: str):
-    page.xref
-    info = page.get_text('dict')
-    # print(info)
-    # exit(1)
-    if 'blocks' in info:
-        for i in range(len(info['blocks'])):
-            block = info['blocks'][i]
-            if 'lines' in block:
-                for line in block['lines']:
-                    if 'spans' in line:
-                        for span in line['spans']:
-                            text = span.get('text', '').replace(' ', '')
-                            if text == keyword:
-                                doc._deleteObject(i)
-
-
 # 去除pdf的水印
 def remove_pdf_watermark():
-    pdf_dir = "../aaa/"
+    pdf_dir = "../www.ttbz.org.cn/"
     files = sorted(os.listdir(pdf_dir))
     for file in files:
         if ".pdf" in file:
@@ -35,20 +18,27 @@ def remove_pdf_watermark():
             try:
                 doc = fitz.open(pdf_file)
 
-                # if len(source.pages) < 3:
-                #     print("删除文件")
-                #     os.remove(pdf_file)
-                #     continue
-                #
-                # if len(source.pages[0].extract_text()) <= 0:
-                #     print("删除文件")
-                #     os.remove(pdf_file)
-                #     continue
-                pdf_new_file = '../bbb/111.pdf'
-                keyword = '全国团体标准信息平台'
-                for page in doc:
-                    find_textbox(doc, page, keyword)
+                if doc.page_count < 3:
+                    print("删除文件")
+                    os.remove(pdf_file)
+                    continue
+                if len(doc[0].get_text('dict')) <= 0:
+                    print("删除文件")
+                    os.remove(pdf_file)
+                    continue
+                pdf_new_file = '../finish-www.ttbz.org.cn/' + file.replace(file.split("-")[0] + "-", "")
+                print(pdf_new_file)
                 exit(1)
+                for pno in range(doc.page_count):
+                    page = doc[pno]
+                    xref = page.get_contents()[0]
+                    cont = bytearray(page.read_contents())
+                    i1 = cont.find(b'\x07\x9e\\r3\\r\x18\x05\x89\x1e=')
+                    if i1 < 0:
+                        break
+                    i2 = cont.find(b"\x07\xfc\x06\x17\x16\xa5\x14\xa9\\n&", i1)
+                    cont[i1 - 2: i2 + 3] = b""
+                    doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
                 doc.save(pdf_new_file)
