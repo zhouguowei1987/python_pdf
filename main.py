@@ -33,10 +33,7 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-                    # if pno == 1:
-                    #     print(cont)
-                    #     print("======")
-                    #     exit(1)
+
                     i1 = cont.find(b'/Xi%d' % (2 * pno))
                     if i1 < 0:
                         break
@@ -50,10 +47,7 @@ def remove_pdf_watermark():
                         start_i1 = cont.rfind(b' ', 0, i1)
 
                     i2 = cont.find(b"Tj\nET\nQ\nq\nQ\n", i1)
-                    # print(i2)
                     cont[start_i1: i2 + 12] = b""
-                    # print(cont)
-                    # exit(1)
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
