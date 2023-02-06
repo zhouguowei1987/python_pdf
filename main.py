@@ -30,13 +30,30 @@ def remove_pdf_watermark():
 
                 for pno in range(doc.page_count):
                     page = doc[pno]
+                    page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-                    i1 = cont.find(b'\x07\x9e\\r3\\r\x18\x05\x89\x1e=')
+                    # if pno == 1:
+                    #     print(cont)
+                    #     print("======")
+                    #     exit(1)
+                    i1 = cont.find(b'/Xi%d' % (2 * pno))
                     if i1 < 0:
                         break
-                    i2 = cont.find(b"\x07\xfc\x06\x17\x16\xa5\x14\xa9\\n&", i1)
-                    cont[i1 - 2: i2 + 3] = b""
+                    # 查看是否是单页
+                    pre_single_page_i1 = cont.rfind(b'q\nQ\nq\nQ\nq\n', 0, i1)
+                    if pre_single_page_i1 >= 0:
+                        # 是单页
+                        start_i1 = pre_single_page_i1
+                    else:
+                        # 不是单页，查找最近的空格
+                        start_i1 = cont.rfind(b' ', 0, i1)
+
+                    i2 = cont.find(b"Tj\nET\nQ\nq\nQ\n", i1)
+                    # print(i2)
+                    cont[start_i1: i2 + 12] = b""
+                    # print(cont)
+                    # exit(1)
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
