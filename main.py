@@ -9,7 +9,7 @@ import os
 
 # 去除pdf的水印
 def remove_pdf_watermark():
-    pdf_dir = "../www.ttbz.org.cn/"
+    pdf_dir = "../temp-www.ttbz.org.cn/"
     files = sorted(os.listdir(pdf_dir))
     for file in files:
         if ".pdf" in file:
