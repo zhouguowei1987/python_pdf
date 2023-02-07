@@ -30,6 +30,12 @@ def remove_pdf_watermark():
 
                 for pno in range(doc.page_count):
                     page = doc[pno]
+                    # 查看是否有"版权所有"字样
+                    content = page.get_text('text')
+                    if content.find('版权所有') > 0:
+                        print("版权所有字样---跳过")
+                        break
+
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
