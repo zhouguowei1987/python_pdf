@@ -51,6 +51,8 @@ def remove_pdf_watermark():
                     im1 = cont.find(b'/Im1')
                     if im1 >= 0:
                         start_im1 = cont.rfind(b'q\n/GS1 gs\n344 0 0 73', 0, im1)
+                        if start_im1 < 0:
+                            start_im1 = cont.rfind(b'q\n/GS2 gs\n344 0 0 73', 0, im1)
                         im2 = cont.find(b"Do\nQ\n", im1)
                         cont[start_im1: im2 + 5] = b""
 
@@ -58,6 +60,8 @@ def remove_pdf_watermark():
                     im3 = cont.find(b'/Im2')
                     if im3 >= 0:
                         start_im3 = cont.rfind(b'q\n/GS0 gs\n344 0 0 73', 0, im3)
+                        if start_im3 < 0:
+                            start_im3 = cont.rfind(b'q\n/GS1 gs\n344 0 0 73', 0, im3)
                         im4 = cont.find(b"Do\nQ\n", im3)
                         cont[start_im3: im4 + 5] = b""
 
