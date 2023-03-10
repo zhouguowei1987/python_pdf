@@ -40,20 +40,27 @@ def remove_pdf_watermark():
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
 
+                    # 删除全国标准信息平台文字
                     i1 = cont.find(b'/Xi%d' % (2 * pno))
-                    if i1 < 0:
-                        break
-                    # 查看是否是单页
-                    pre_single_page_i1 = cont.rfind(b'q\nQ\nq\nQ\nq\n', 0, i1)
-                    if pre_single_page_i1 >= 0:
-                        # 是单页
-                        start_i1 = pre_single_page_i1
-                    else:
-                        # 不是单页，查找最近的空格
-                        start_i1 = cont.rfind(b' ', 0, i1)
+                    if i1 >= 0:
+                        start_i1 = cont.rfind(b'\nQ\nq\nQ\nq\n', 0, i1)
+                        i2 = cont.find(b"Tj\nET\nQ\nq\nQ\n", i1)
+                        cont[start_i1: i2 + 12] = b""
 
-                    i2 = cont.find(b"Tj\nET\nQ\nq\nQ\n", i1)
-                    cont[start_i1: i2 + 12] = b""
+                    # 删除全国标准信息平台图片1
+                    im1 = cont.find(b'/Im1')
+                    if im1 >= 0:
+                        start_im1 = cont.rfind(b'q\n/GS1 gs\n344 0 0 73', 0, im1)
+                        im2 = cont.find(b"Do\nQ\n", im1)
+                        cont[start_im1: im2 + 5] = b""
+
+                    # 删除全国标准信息平台图片2
+                    im3 = cont.find(b'/Im2')
+                    if im3 >= 0:
+                        start_im3 = cont.rfind(b'q\n/GS0 gs\n344 0 0 73', 0, im3)
+                        im4 = cont.find(b"Do\nQ\n", im3)
+                        cont[start_im3: im4 + 5] = b""
+
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
