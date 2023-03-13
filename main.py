@@ -67,7 +67,7 @@ def remove_pdf_watermark():
                         im4 = cont.find(b"Do\nQ\n", im3)
                         cont[start_im3: im4 + 5] = b""
 
-                    if cont == b"":
+                    if cont == b"" or cont == b'q\nQ\n':
                         delete_page_ids.append(pno)
 
                     doc.update_stream(xref, cont)
