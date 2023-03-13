@@ -79,7 +79,7 @@ def remove_pdf_watermark():
                 doc.save(pdf_new_file)
                 if doc.page_count < 6:
                     print("删除文件")
-                    os.remove(pdf_file)
+                    os.remove(pdf_new_file)
                     continue
                 doc.close()
             except Exception as e:
