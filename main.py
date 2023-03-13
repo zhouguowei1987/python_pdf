@@ -18,7 +18,7 @@ def remove_pdf_watermark():
             try:
                 doc = fitz.open(pdf_file)
 
-                if doc.page_count < 3:
+                if doc.page_count < 6:
                     print("删除文件")
                     os.remove(pdf_file)
                     continue
