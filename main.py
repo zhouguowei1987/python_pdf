@@ -28,6 +28,8 @@ def remove_pdf_watermark():
                     continue
                 pdf_new_file = '../finish-www.ttbz.org.cn/' + file.replace(file.split("-")[0] + "-", "")
 
+                # 记录需要删除页面id
+                delete_page_ids = []
                 for pno in range(doc.page_count):
                     page = doc[pno]
                     # 查看是否有"版权所有"字样
@@ -65,15 +67,19 @@ def remove_pdf_watermark():
                         im4 = cont.find(b"Do\nQ\n", im3)
                         cont[start_im3: im4 + 5] = b""
 
+                    if cont == b"":
+                        delete_page_ids.append(pno)
+
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
+                doc.delete_pages(delete_page_ids)
                 doc.save(pdf_new_file)
                 doc.close()
             except Exception as e:
                 print(e)
-                print("删除文件")
-                os.remove(pdf_file)
+                # print("删除文件")
+                # os.remove(pdf_file)
 
 
 if __name__ == '__main__':
