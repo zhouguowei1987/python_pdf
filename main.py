@@ -73,7 +73,9 @@ def remove_pdf_watermark():
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
-                doc.delete_pages(delete_page_ids)
+
+                if len(delete_page_ids):
+                    doc.delete_pages(delete_page_ids)
                 doc.save(pdf_new_file)
                 doc.close()
             except Exception as e:
