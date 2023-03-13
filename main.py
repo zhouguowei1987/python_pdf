@@ -37,6 +37,10 @@ def remove_pdf_watermark():
                     if content.find('版权所有') > 0:
                         print("版权所有字样---跳过")
                         break
+                        # 查看是否有"不得翻印"字样
+                    if content.find('不得翻印') > 0:
+                        print("不得翻印字样---跳过")
+                        break
 
                     page.clean_contents()
                     xref = page.get_contents()[0]
@@ -80,8 +84,8 @@ def remove_pdf_watermark():
                 doc.close()
             except Exception as e:
                 print(e)
-                # print("删除文件")
-                # os.remove(pdf_file)
+                print("删除文件")
+                os.remove(pdf_file)
 
 
 if __name__ == '__main__':
