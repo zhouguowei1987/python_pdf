@@ -23,6 +23,7 @@ def remove_pdf_watermark():
                     os.remove(pdf_file)
                     continue
                 pdf_new_file = '../finish-www.ttbz.org.cn/' + file.replace(file.split("-")[0] + "-", "")
+                pdf_new_file = pdf_new_file.replace(" ", "")
 
                 # 记录需要删除页面id
                 delete_page_ids = []
