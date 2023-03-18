@@ -22,8 +22,7 @@ def remove_pdf_watermark():
                     print("删除文件")
                     os.remove(pdf_file)
                     continue
-                pdf_new_file = '../finish-www.ttbz.org.cn/' + file.replace(file.split("-")[0] + "-", "")
-                pdf_new_file = pdf_new_file.replace(" ", "")
+                pdf_new_file = '../finish-www.ttbz.org.cn/' + file.replace(file.split("-")[0].replace(" ", "") + "-", "")
 
                 # 记录需要删除页面id
                 delete_page_ids = []
@@ -42,13 +41,22 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
+                    # print(cont)
+                    # exit(1)
 
                     # 删除全国标准信息平台文字
                     i1 = cont.find(b'/Xi%d' % (2 * pno))
                     if i1 >= 0:
-                        start_i1 = cont.rfind(b'\nQ\nq\nQ\nq\n', 0, i1)
+                        # start_i1 = cont.rfind(b'\nQ\nq\nQ\nq\n', 0, i1)
                         i2 = cont.find(b"Tj\nET\nQ\nq\nQ\n", i1)
-                        cont[start_i1: i2 + 12] = b""
+                        cont[i1: i2 + 12] = b""
+
+                    # 删除全国标准信息平台文字
+                    i3 = cont.find(b'/Xi%d' % (2 * pno + 2))
+                    if i3 >= 0:
+                        # start_i3 = cont.rfind(b'\nQ\nq\nQ\nq\n', 0, i3)
+                        i4 = cont.find(b"Tj\nET\nQ\nq\nQ\n", i3)
+                        cont[i3: i4 + 12] = b""
 
                     # 删除全国标准信息平台图片1
                     im1 = cont.find(b'/Im1')
@@ -78,7 +86,7 @@ def remove_pdf_watermark():
                 if len(delete_page_ids):
                     doc.delete_pages(delete_page_ids)
                 doc.save(pdf_new_file)
-                if doc.page_count < 6:
+                if doc.page_count < 8:
                     print("删除文件")
                     os.remove(pdf_new_file)
                     continue
