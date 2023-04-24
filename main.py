@@ -33,7 +33,7 @@ def remove_pdf_watermark():
                     if content.find('版权所有') > 0:
                         print("版权所有字样---跳过")
                         break
-                        # 查看是否有"不得翻印"字样
+                    # 查看是否有"不得翻印"字样
                     if content.find('不得翻印') > 0:
                         print("不得翻印字样---跳过")
                         break
@@ -86,7 +86,7 @@ def remove_pdf_watermark():
                 if len(delete_page_ids):
                     doc.delete_pages(delete_page_ids)
                 doc.save(pdf_new_file)
-                if doc.page_count < 4:
+                if doc.page_count < 5:
                     print("删除文件")
                     os.remove(pdf_new_file)
                     continue
