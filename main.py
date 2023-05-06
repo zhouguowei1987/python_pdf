@@ -76,7 +76,9 @@ def remove_pdf_watermark():
                         im4 = cont.find(b"Do\nQ\n", im3)
                         cont[start_im3: im4 + 5] = b""
 
-                    if cont == b"" or cont == b'q\nQ\n' or cont == b'q\nQ\nq\n' or cont == b'q\nQ\nq\nQ\nq\nQ\n':
+                    # 记录要删除空白页
+                    emptyCont = [b'', b'q\nQ\n', b'q\nQ\nq\n', b'q\nQ\nq\nQ\nq\nQ\n', b'q\nQ\nq\nQ\nq\n']
+                    if cont in emptyCont:
                         delete_page_ids.append(pno)
 
                     doc.update_stream(xref, cont)
