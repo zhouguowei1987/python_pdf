@@ -76,11 +76,17 @@ def handle_pdf():
                             if header2_case2_i2 >= 0:
                                 cont[header2_case2_i1: header2_case2_i2 + 12] = b""
 
+                        # 第三种情况
+                        header2_case3_i1 = cont.find(b'/Im1')
+                        if header2_case3_i1 >= 0:
+                            header2_case3_i2 = cont.find(b"Tj\nET\nq\n", header2_case3_i1)
+                            if header2_case3_i2 >= 0:
+                                cont[header2_case3_i1: header2_case3_i2 + 8] = b""
                         # ##########################第二种情况：带连接-删除页码文字###################################
 
                         links = page.get_links()
                         for link in links:
-                            if link.get('uri') == 'http://www.chinaexam.org':
+                            if link.get('uri') in ['http://www.chinaexam.org', 'http://www.chinaexam.org/']:
                                 page.delete_link(link)
 
                         # 插入页眉文本
