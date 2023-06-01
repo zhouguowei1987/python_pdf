@@ -100,8 +100,8 @@ def handle_pdf():
 
                         doc.update_stream(xref, cont)
 
-                    if os.path.exists(pdf_new_file):
-                        os.remove(pdf_new_file)
+                    # if os.path.exists(pdf_new_file):
+                    #     os.remove(pdf_new_file)
 
                     # 添加封面页
                     # doc.new_page(0)
@@ -138,7 +138,7 @@ def handle_pdf():
 
                     # 删除有封面图的最后一页
                     if delete_last_cover_id != 0:
-                        doc.delete_page(delete_last_cover_id + 1)
+                        doc.delete_page(delete_last_cover_id)
 
                     doc.save(pdf_new_file)
             except Exception as e:
