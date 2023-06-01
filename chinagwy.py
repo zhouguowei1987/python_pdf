@@ -104,37 +104,37 @@ def handle_pdf():
                         os.remove(pdf_new_file)
 
                     # 添加封面页
-                    doc.new_page(0)
-                    title_max_split = 18
-                    title_fontsize_to_use = 20
-                    title_fontname_to_use = "TNXQRC+SimSun"
-                    title_fontfile_to_use = "simsun.ttf"
-                    title_text = pdf_file_name
-                    if len(pdf_file_name) >= title_max_split:
-                        if pdf_file_name[:title_max_split].find("《") != -1:
-                            pdf_file_name_symbol_index1 = pdf_file_name[:title_max_split].index("《")
-                            title_text = pdf_file_name[0:pdf_file_name_symbol_index1] \
-                                         + "\n" + pdf_file_name[pdf_file_name_symbol_index1:]
-                        elif pdf_file_name[:title_max_split].find("（") != -1:
-                            pdf_file_name_symbol_index2 = pdf_file_name[:title_max_split].index("（")
-                            title_text = pdf_file_name[0:pdf_file_name_symbol_index2] \
-                                         + "\n" + pdf_file_name[pdf_file_name_symbol_index2:]
-                        elif pdf_file_name[:title_max_split].find("及参考答案") != -1:
-                            pdf_file_name_symbol_index2 = pdf_file_name[:title_max_split].index("及参考答案")
-                            title_text = pdf_file_name[0:pdf_file_name_symbol_index2] \
-                                         + "\n" + pdf_file_name[pdf_file_name_symbol_index2:]
-                        else:
-                            title_text = pdf_file_name[0:title_max_split] + "\n" + pdf_file_name[title_max_split:]
-
-                    title_rect = fitz.Rect(50, 350, 500, 500)
-                    # doc[0].draw_rect(title_rect, color=(0.25, 1, 0.25))
-                    doc[0].insert_textbox(title_rect, title_text,
-                                          fontsize=title_fontsize_to_use,
-                                          fontname=title_fontname_to_use,
-                                          fontfile=title_fontfile_to_use,
-                                          lineheight=2,
-                                          color=(0, 0, 0),
-                                          align=1)
+                    # doc.new_page(0)
+                    # title_max_split = 18
+                    # title_fontsize_to_use = 20
+                    # title_fontname_to_use = "TNXQRC+SimSun"
+                    # title_fontfile_to_use = "simsun.ttf"
+                    # title_text = pdf_file_name
+                    # if len(pdf_file_name) >= title_max_split:
+                    #     if pdf_file_name[:title_max_split].find("《") != -1:
+                    #         pdf_file_name_symbol_index1 = pdf_file_name[:title_max_split].index("《")
+                    #         title_text = pdf_file_name[0:pdf_file_name_symbol_index1] \
+                    #                      + "\n" + pdf_file_name[pdf_file_name_symbol_index1:]
+                    #     elif pdf_file_name[:title_max_split].find("（") != -1:
+                    #         pdf_file_name_symbol_index2 = pdf_file_name[:title_max_split].index("（")
+                    #         title_text = pdf_file_name[0:pdf_file_name_symbol_index2] \
+                    #                      + "\n" + pdf_file_name[pdf_file_name_symbol_index2:]
+                    #     elif pdf_file_name[:title_max_split].find("及参考答案") != -1:
+                    #         pdf_file_name_symbol_index2 = pdf_file_name[:title_max_split].index("及参考答案")
+                    #         title_text = pdf_file_name[0:pdf_file_name_symbol_index2] \
+                    #                      + "\n" + pdf_file_name[pdf_file_name_symbol_index2:]
+                    #     else:
+                    #         title_text = pdf_file_name[0:title_max_split] + "\n" + pdf_file_name[title_max_split:]
+                    #
+                    # title_rect = fitz.Rect(50, 350, 500, 500)
+                    # # doc[0].draw_rect(title_rect, color=(0.25, 1, 0.25))
+                    # doc[0].insert_textbox(title_rect, title_text,
+                    #                       fontsize=title_fontsize_to_use,
+                    #                       fontname=title_fontname_to_use,
+                    #                       fontfile=title_fontfile_to_use,
+                    #                       lineheight=2,
+                    #                       color=(0, 0, 0),
+                    #                       align=1)
 
                     # 删除有封面图的最后一页
                     if delete_last_cover_id != 0:
