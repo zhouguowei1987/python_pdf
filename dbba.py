@@ -35,12 +35,19 @@ def remove_pdf_watermark():
                     # print(cont)
                     # exit(1)
 
-                    # 删除地方标准信息平台图片
+                    # 删除地方标准信息平台图片1
                     im1 = cont.find(b'/Im1')
                     if im1 >= 0:
-                        im2 = cont.find(b"Do\nQ\nQ", im1)
+                        im2 = cont.find(b"Do\nQ\nQ\nq\nQ\n", im1)
                         if im2 >= 0:
-                            cont[im1: im2 + 5] = b""
+                            cont[im1: im2 + 11] = b""
+
+                    # 删除地方标准信息平台图片2
+                    im3 = cont.find(b'/Im2')
+                    if im3 >= 0:
+                        im4 = cont.find(b"Do\nQ\nQ\nq\nQ\n", im3)
+                        if im4 >= 0:
+                            cont[im3: im4 + 11] = b""
 
                     # 记录要删除空白页
                     emptyCont = [b'', b'q\nQ\n', b'q\nQ\nq\n', b'q\nQ\nq\nQ\nq\nQ\n', b'q\nQ\nq\nQ\nq\n']
