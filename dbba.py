@@ -32,12 +32,12 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-                    # if pno == 1:
+                    # if pno == 14:
                     #     print(cont)
-                    #     exit(1)
+                    #     exit()
 
                     # 删除地方标准信息平台图片
-                    im1 = cont.find(b'Do\nQ\nQ\nq\nQ\n')
+                    im1 = cont.rfind(b'Do\nQ\nQ\nq\nQ\n')
                     if im1 >= 0:
                         im2 = cont.rfind(b"/Im", 0, im1)
                         if im2 >= 0:
