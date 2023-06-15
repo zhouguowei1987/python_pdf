@@ -36,6 +36,18 @@ def remove_pdf_watermark():
                         is_save_new_file = False
                         print("版权所有字样---跳过")
                         break
+                    # 查看是否有"版权专有"字样
+                    content = page.get_text('text')
+                    if content.find('版权专有') > 0:
+                        is_save_new_file = False
+                        print("版权专有字样---跳过")
+                        break
+                    # 查看是否有"侵权必究"字样
+                    content = page.get_text('text')
+                    if content.find('侵权必究') > 0:
+                        is_save_new_file = False
+                        print("侵权必究字样---跳过")
+                        break
                     # 查看是否有"不得翻印"字样
                     if content.find('不得翻印') > 0:
                         is_save_new_file = False
@@ -56,8 +68,8 @@ def remove_pdf_watermark():
                         if im2 >= 0:
                             cont[im2: im1] = b""
 
-                    # if file == "金银花扦插育苗技术规程(DB43-T 2618-2023).pdf":
-                    #     if pno == 2:
+                    # if file == "气体灭火系统质量检验评定规程(DB64-T 408-2017).pdf":
+                    #     if pno == 1:
                     #         print(cont)
                     #         exit(1)
                     # 记录要删除空白页
@@ -69,6 +81,8 @@ def remove_pdf_watermark():
                         b'q\n587.52 0 0 840.96 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
                                 3 * pno),
                         b'q\n591.36 0 0 837.12 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 15 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                                3 * pno),
+                        b'q\n595.2 0 0 841.92 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
                                 3 * pno),
                         b'q\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
                         b'q\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
