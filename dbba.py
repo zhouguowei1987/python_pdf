@@ -53,6 +53,7 @@ def remove_pdf_watermark():
                                 3 * pno),
                         b'q\n596.16006 0 0 841.86007 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
                                 3 * pno),
+                        b'q\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
                         b'q\nQ\nq\nQ\nq\nQ\n', b'q\nQ\nq\nQ\nq\n'
                     ]
                     if cont in emptyCont:
