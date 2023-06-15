@@ -43,10 +43,10 @@ def remove_pdf_watermark():
                         if im2 >= 0:
                             cont[im2: im1] = b""
 
-                    # if file == "M15车用甲醇汽油(DB64-T 1017-2014).pdf":
-                    #     if pno == 0:
-                    #         print(cont)
-                    #         exit(1)
+                    if file == "电梯运行安全监测信息管理系统技术规范第1部分-总体结构(DB64-T 992.1-2014).pdf":
+                        if pno == 0:
+                            print(cont)
+                            exit(1)
                     # 记录要删除空白页
                     emptyCont = [
                         b'q\n587.52 0 0 829.44 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 44 cm\nDo\nQ\nQ\nq\nQ\n' % (
@@ -54,6 +54,8 @@ def remove_pdf_watermark():
                         b'q\n596.16006 0 0 841.86007 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
                                 3 * pno),
                         b'q\n587.52 0 0 840.96 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                                3 * pno),
+                        b'q\n591.36 0 0 837.12 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 15 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
                                 3 * pno),
                         b'q\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
                         b'q\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
