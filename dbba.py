@@ -43,14 +43,17 @@ def remove_pdf_watermark():
                         if im2 >= 0:
                             cont[im2: im1] = b""
 
-                    # if pno == 1:
-                    #     print(cont)
-                    #     exit(1)
+                    # if file == "M15车用甲醇汽油(DB64-T 1017-2014).pdf":
+                    #     if pno == 0:
+                    #         print(cont)
+                    #         exit(1)
                     # 记录要删除空白页
                     emptyCont = [
                         b'q\n587.52 0 0 829.44 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 44 cm\nDo\nQ\nQ\nq\nQ\n' % (
                                 3 * pno),
                         b'q\n596.16006 0 0 841.86007 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                                3 * pno),
+                        b'q\n587.52 0 0 840.96 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
                                 3 * pno),
                         b'q\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
                         b'q\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
