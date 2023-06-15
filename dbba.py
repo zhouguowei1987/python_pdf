@@ -12,6 +12,7 @@ def remove_pdf_watermark():
     pdf_dir = "../temp-dbba.sacinfo.org.cn/"
     files = sorted(os.listdir(pdf_dir))
     for file in files:
+        is_save_new_file = True
         if ".pdf" in file:
             print(file)
             pdf_file = pdf_dir + file
@@ -29,6 +30,18 @@ def remove_pdf_watermark():
                 for pno in range(doc.page_count):
                     page = doc[pno]
 
+                    # 查看是否有"版权所有"字样
+                    content = page.get_text('text')
+                    if content.find('版权所有') > 0:
+                        is_save_new_file = False
+                        print("版权所有字样---跳过")
+                        break
+                    # 查看是否有"不得翻印"字样
+                    if content.find('不得翻印') > 0:
+                        is_save_new_file = False
+                        print("不得翻印字样---跳过")
+                        break
+
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
@@ -43,10 +56,10 @@ def remove_pdf_watermark():
                         if im2 >= 0:
                             cont[im2: im1] = b""
 
-                    if file == "电梯运行安全监测信息管理系统技术规范第1部分-总体结构(DB64-T 992.1-2014).pdf":
-                        if pno == 0:
-                            print(cont)
-                            exit(1)
+                    # if file == "金银花扦插育苗技术规程(DB43-T 2618-2023).pdf":
+                    #     if pno == 2:
+                    #         print(cont)
+                    #         exit(1)
                     # 记录要删除空白页
                     emptyCont = [
                         b'q\n587.52 0 0 829.44 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 44 cm\nDo\nQ\nQ\nq\nQ\n' % (
@@ -74,7 +87,8 @@ def remove_pdf_watermark():
                     print("删除文件222")
                     # os.remove(pdf_new_file)
                     continue
-                doc.save(pdf_new_file)
+                if is_save_new_file:
+                    doc.save(pdf_new_file)
                 doc.close()
             except Exception as e:
                 print(e)
