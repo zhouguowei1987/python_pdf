@@ -19,7 +19,7 @@ def remove_pdf_watermark():
                 doc = fitz.open(pdf_file)
 
                 if len(doc[0].get_text('dict')) <= 0:
-                    print("删除文件")
+                    print("删除文件111")
                     os.remove(pdf_file)
                     continue
                 pdf_new_file = '../finish-dbba.sacinfo.org.cn/' + file
@@ -32,25 +32,29 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-                    # print(cont)
-                    # exit(1)
+                    # if pno == 1:
+                    #     print(cont)
+                    #     exit(1)
 
-                    # 删除地方标准信息平台图片1
-                    im1 = cont.find(b'/Im1')
+                    # 删除地方标准信息平台图片
+                    im1 = cont.find(b'Do\nQ\nQ\nq\nQ\n')
                     if im1 >= 0:
-                        im2 = cont.find(b"Do\nQ\nQ\nq\nQ\n", im1)
+                        im2 = cont.rfind(b"/Im", 0, im1)
                         if im2 >= 0:
-                            cont[im1: im2 + 11] = b""
+                            cont[im2: im1] = b""
 
-                    # 删除地方标准信息平台图片2
-                    im3 = cont.find(b'/Im2')
-                    if im3 >= 0:
-                        im4 = cont.find(b"Do\nQ\nQ\nq\nQ\n", im3)
-                        if im4 >= 0:
-                            cont[im3: im4 + 11] = b""
-
+                    # if pno == 1:
+                    #     print(cont)
+                    #     exit(1)
                     # 记录要删除空白页
-                    emptyCont = [b'', b'q\nQ\n', b'q\nQ\nq\n', b'q\nQ\nq\nQ\nq\nQ\n', b'q\nQ\nq\nQ\nq\n']
+                    emptyCont = [
+                        b'', b'q\nQ\n', b'q\nQ\nq\n',
+                        b'q\n587.52 0 0 829.44 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 44 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                                3 * pno),
+                        b'q\n596.16006 0 0 841.86007 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                                3 * pno),
+                        b'q\nQ\nq\nQ\nq\nQ\n', b'q\nQ\nq\nQ\nq\n'
+                    ]
                     if cont in emptyCont:
                         delete_page_ids.append(pno)
 
@@ -60,16 +64,17 @@ def remove_pdf_watermark():
 
                 if len(delete_page_ids):
                     doc.delete_pages(delete_page_ids)
-                doc.save(pdf_new_file)
+
                 if doc.page_count < 5:
-                    print("删除文件")
-                    os.remove(pdf_new_file)
+                    print("删除文件222")
+                    # os.remove(pdf_new_file)
                     continue
+                doc.save(pdf_new_file)
                 doc.close()
             except Exception as e:
                 print(e)
-                print("删除文件")
-                os.remove(pdf_file)
+                print("删除文件333")
+                # os.remove(pdf_file)
 
 
 if __name__ == '__main__':
