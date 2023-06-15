@@ -48,13 +48,12 @@ def remove_pdf_watermark():
                     #     exit(1)
                     # 记录要删除空白页
                     emptyCont = [
-                        b'', b'q\nQ\n', b'q\nQ\nq\n',
                         b'q\n587.52 0 0 829.44 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 44 cm\nDo\nQ\nQ\nq\nQ\n' % (
                                 3 * pno),
                         b'q\n596.16006 0 0 841.86007 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
                                 3 * pno),
                         b'q\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
-                        b'q\nQ\nq\nQ\nq\nQ\n', b'q\nQ\nq\nQ\nq\n'
+                        b'q\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
                     ]
                     if cont in emptyCont:
                         delete_page_ids.append(pno)
