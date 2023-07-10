@@ -68,7 +68,7 @@ def remove_pdf_watermark():
                         if im2 >= 0:
                             cont[im2: im1] = b""
 
-                    # if pno == 3:
+                    # if pno == 1:
                     #     print(cont)
                     #     exit(1)
                     # 记录要删除空白页
@@ -89,6 +89,10 @@ def remove_pdf_watermark():
                                 3 * pno),
                         b'q\n/GS1 gs\n0 g\nBT\n/TT2 1 Tf\n10.5 0 0 10.5 90 758.4803 Tm\n( ) Tj\nET\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
                                 3 * pno),
+                        b'q\n.000006167 0 413.88 595.32 re\nW*\nn\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 0 21 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                                3 * pno),
+                        b'q\n/Part <</MCID 0>> BDC\n595.44 0 0 842.04 0 0 cm\n/Im1 Do\nQ\nEMC\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                                3 * pno),
                         b'q\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
                         b'q\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
                         b'q\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 315 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
@@ -106,7 +110,7 @@ def remove_pdf_watermark():
                 if len(delete_page_ids):
                     doc.delete_pages(delete_page_ids)
 
-                if doc.page_count < 5:
+                if doc.page_count < 8:
                     print("删除文件222")
                     # os.remove(pdf_new_file)
                     continue
