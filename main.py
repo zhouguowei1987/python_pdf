@@ -22,7 +22,8 @@ def remove_pdf_watermark():
                     print("删除文件")
                     os.remove(pdf_file)
                     continue
-                pdf_new_file = '../upload.doc88.com/finish-www.ttbz.org.cn/' + file.replace(file.split("-")[0].replace(" ", "") + "-", "")
+                pdf_new_file = '../upload.doc88.com/finish-www.ttbz.org.cn/' + file.replace(
+                    file.split("-")[0].replace(" ", "") + "-", "")
 
                 # 记录需要删除页面id
                 delete_page_ids = []
@@ -41,22 +42,43 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-                    # print(cont)
-                    # exit(1)
+
+                    # if pno == 0:
+                    #     print(cont)
+                    #     exit(1)
 
                     # 删除全国标准信息平台文字
                     i1 = cont.find(b'/Xi%d' % (2 * pno))
                     if i1 >= 0:
-                        # start_i1 = cont.rfind(b'\nQ\nq\nQ\nq\n', 0, i1)
                         i2 = cont.find(b"Tj\nET\nQ\nq\nQ\n", i1)
-                        cont[i1: i2 + 12] = b""
+                        if i2 >= 0:
+                            cont[i1: i2 + 12] = b""
 
                     # 删除全国标准信息平台文字
                     i3 = cont.find(b'/Xi%d' % (2 * pno + 2))
                     if i3 >= 0:
-                        # start_i3 = cont.rfind(b'\nQ\nq\nQ\nq\n', 0, i3)
                         i4 = cont.find(b"Tj\nET\nQ\nq\nQ\n", i3)
-                        cont[i3: i4 + 12] = b""
+                        if i4 >= 0:
+                            cont[i3: i4 + 12] = b""
+
+                    # 删除全国标准信息平台文字
+                    # 第一步
+                    # i5 = cont.find(b'  /P <</MCID 0')
+                    # if i5 >= 0:
+                    #     i6 = cont.find(b"Tm\nET\nQ\n", i5)
+                    #     if i6 >= 0:
+                    #         cont[i5: i6 + 8] = b""
+
+                    # 第二步
+                    # i7 = cont.find(b' EMC   Q\nq\n/Xi%d' % (2 * pno))
+                    # if i7 >= 0:
+                    #     i8 = cont.find(b"Tm\nET\nQ\n", i7)
+                    #     if i8 >= 0:
+                    #         cont[i7: i8 + 8] = b""
+
+                    # if pno == 0:
+                    #     print(cont)
+                    #     exit(1)
 
                     # 删除全国标准信息平台图片1
                     im1 = cont.find(b'/Im1')
