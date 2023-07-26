@@ -43,7 +43,7 @@ def remove_pdf_watermark():
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
 
-                    # if pno == 0:
+                    # if pno == 1:
                     #     print(cont)
                     #     exit(1)
 
@@ -60,25 +60,6 @@ def remove_pdf_watermark():
                         i4 = cont.find(b"Tj\nET\nQ\nq\nQ\n", i3)
                         if i4 >= 0:
                             cont[i3: i4 + 12] = b""
-
-                    # 删除全国标准信息平台文字
-                    # 第一步
-                    # i5 = cont.find(b'  /P <</MCID 0')
-                    # if i5 >= 0:
-                    #     i6 = cont.find(b"Tm\nET\nQ\n", i5)
-                    #     if i6 >= 0:
-                    #         cont[i5: i6 + 8] = b""
-
-                    # 第二步
-                    # i7 = cont.find(b' EMC   Q\nq\n/Xi%d' % (2 * pno))
-                    # if i7 >= 0:
-                    #     i8 = cont.find(b"Tm\nET\nQ\n", i7)
-                    #     if i8 >= 0:
-                    #         cont[i7: i8 + 8] = b""
-
-                    # if pno == 0:
-                    #     print(cont)
-                    #     exit(1)
 
                     # 删除全国标准信息平台图片1
                     im1 = cont.find(b'/Im1')
@@ -103,7 +84,7 @@ def remove_pdf_watermark():
                     if cont in emptyCont:
                         delete_page_ids.append(pno)
 
-                    doc.update_stream(xref, cont)
+                    doc.update_stream(xref, cont, 0, 0)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
 
