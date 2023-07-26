@@ -84,7 +84,7 @@ def remove_pdf_watermark():
                     if cont in emptyCont:
                         delete_page_ids.append(pno)
 
-                    doc.update_stream(xref, cont, 0, 0)
+                    doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
 
