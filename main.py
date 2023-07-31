@@ -43,7 +43,7 @@ def remove_pdf_watermark():
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
 
-                    # if pno == 1:
+                    # if pno == 2:
                     #     print(cont)
                     #     exit(1)
 
@@ -78,6 +78,17 @@ def remove_pdf_watermark():
                             start_im3 = cont.rfind(b'q\n/GS1 gs\n344 0 0 73', 0, im3)
                         im4 = cont.find(b"Do\nQ\n", im3)
                         cont[start_im3: im4 + 5] = b""
+
+                    # 删除ZZB-T标准水印
+                    w1 = cont.rfind(b'/Artifact')
+                    if w1 >= 0:
+                        w2 = cont.find(b"EMC", w1)
+                        if w2 >= 0:
+                            cont[w1: w2 + 3] = b""
+
+                    # if pno == 2:
+                    #     print(cont)
+                    #     exit(1)
 
                     # 记录要删除空白页
                     emptyCont = [b'', b'q\nQ\n', b'q\nQ\nq\n', b'q\nQ\nq\nQ\nq\nQ\n', b'q\nQ\nq\nQ\nq\n']
