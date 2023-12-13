@@ -24,6 +24,11 @@ def remove_pdf_watermark():
                     continue
                 pdf_new_file = '../upload.doc88.com/finish-www.ttbz.org.cn/' + file.replace(
                     file.split("-")[0].replace(" ", "") + "-", "")
+                pdf_new_file = pdf_new_file.replace("：", "-")
+                pdf_new_file = pdf_new_file.replace("《", "")
+                pdf_new_file = pdf_new_file.replace("》", "")
+                pdf_new_file = pdf_new_file.replace("（", "")
+                pdf_new_file = pdf_new_file.replace("）", "")
 
                 # 记录需要删除页面id
                 delete_page_ids = []
@@ -80,11 +85,11 @@ def remove_pdf_watermark():
                         cont[start_im3: im4 + 5] = b""
 
                     # 删除ZZB-T标准水印
-                    w1 = cont.rfind(b'/Artifact')
-                    if w1 >= 0:
-                        w2 = cont.find(b"EMC", w1)
-                        if w2 >= 0:
-                            cont[w1: w2 + 3] = b""
+                    # w1 = cont.rfind(b'/Artifact')
+                    # if w1 >= 0:
+                    #     w2 = cont.find(b"EMC", w1)
+                    #     if w2 >= 0:
+                    #         cont[w1: w2 + 3] = b""
 
                     # if pno == 2:
                     #     print(cont)
