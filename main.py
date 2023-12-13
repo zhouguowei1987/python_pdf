@@ -9,26 +9,30 @@ import os
 
 # 去除pdf的水印
 def remove_pdf_watermark():
-    pdf_dir = "../temp-www.ttbz.org.cn/"
+    pdf_dir = "../www.ttbz.org.cn/"
     files = sorted(os.listdir(pdf_dir))
     for file in files:
         if ".pdf" in file:
             print(file)
             pdf_file = pdf_dir + file
             try:
-                doc = fitz.open(pdf_file)
-
-                if len(doc[0].get_text('dict')) <= 0:
-                    print("删除文件")
-                    os.remove(pdf_file)
-                    continue
-                pdf_new_file = '../upload.doc88.com/finish-www.ttbz.org.cn/' + file.replace(
+                pdf_new_file = '../finish-www.ttbz.org.cn/' + file.replace(
                     file.split("-")[0].replace(" ", "") + "-", "")
                 pdf_new_file = pdf_new_file.replace("：", "-")
                 pdf_new_file = pdf_new_file.replace("《", "")
                 pdf_new_file = pdf_new_file.replace("》", "")
                 pdf_new_file = pdf_new_file.replace("（", "")
                 pdf_new_file = pdf_new_file.replace("）", "")
+
+                if os.path.exists(pdf_new_file):
+                    continue
+
+                doc = fitz.open(pdf_file)
+
+                if len(doc[0].get_text('dict')) <= 0:
+                    print("删除文件")
+                    os.remove(pdf_file)
+                    continue
 
                 # 记录需要删除页面id
                 delete_page_ids = []
