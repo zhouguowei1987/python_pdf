@@ -11,7 +11,7 @@ import os
 
 # 去除pdf的水印
 def pdf2word():
-    pdf_dir = "../finish-www.ttbz.org.cn/"
+    pdf_dir = "../down.ttbz.org.cn/"
     docx_dir = "../docx.ttbz.org.cn/"
     files = sorted(os.listdir(pdf_dir))
     for file in files:
