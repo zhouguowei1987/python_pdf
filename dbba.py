@@ -112,15 +112,17 @@ def remove_pdf_watermark():
 
                 if doc.page_count < 8:
                     print("删除文件222")
-                    # os.remove(pdf_new_file)
+                    os.remove(pdf_file)
                     continue
                 if is_save_new_file:
                     doc.save(pdf_new_file)
                 doc.close()
+                print("删除源文件")
+                os.remove(pdf_file)
             except Exception as e:
                 print(e)
                 print("删除文件333")
-                # os.remove(pdf_file)
+                os.remove(pdf_file)
 
 
 if __name__ == '__main__':
