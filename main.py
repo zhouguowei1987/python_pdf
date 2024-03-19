@@ -30,7 +30,7 @@ def remove_pdf_watermark():
                 doc = fitz.open(pdf_file)
 
                 if len(doc[0].get_text('dict')) <= 0:
-                    print("删除文件")
+                    print("删除文件111")
                     os.remove(pdf_file)
                     continue
 
@@ -112,13 +112,16 @@ def remove_pdf_watermark():
                     doc.delete_pages(delete_page_ids)
                 doc.save(pdf_new_file)
                 if doc.page_count < 5:
-                    print("删除文件")
+                    print("删除文件222")
+                    os.remove(pdf_file)
                     os.remove(pdf_new_file)
                     continue
                 doc.close()
+                print("删除源文件")
+                os.remove(pdf_file)
             except Exception as e:
                 print(e)
-                print("删除文件")
+                print("删除文件333")
                 os.remove(pdf_file)
 
 

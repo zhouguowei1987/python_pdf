@@ -23,7 +23,7 @@ def remove_pdf_watermark():
                     print("删除文件111")
                     os.remove(pdf_file)
                     continue
-                pdf_new_file = '../upload.doc88.com/finish-dbba.sacinfo.org.cn---stop/' + file
+                pdf_new_file = '../upload.doc88.com/finish-dbba.sacinfo.org.cn/' + file
 
                 # 记录需要删除页面id
                 delete_page_ids = []
@@ -110,7 +110,7 @@ def remove_pdf_watermark():
                 if len(delete_page_ids):
                     doc.delete_pages(delete_page_ids)
 
-                if doc.page_count < 8:
+                if doc.page_count < 5:
                     print("删除文件222")
                     os.remove(pdf_file)
                     continue
