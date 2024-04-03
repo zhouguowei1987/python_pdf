@@ -72,36 +72,36 @@ def remove_pdf_watermark():
                     #     print(cont)
                     #     exit(1)
                     # 记录要删除空白页
-                    emptyCont = [
-                        b'q\n587.52 0 0 829.44 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 44 cm\nDo\nQ\nQ\nq\nQ\n' % (
-                                3 * pno),
-                        b'q\n596.16006 0 0 841.86007 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
-                                3 * pno),
-                        b'q\n587.52 0 0 840.96 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
-                                3 * pno),
-                        b'q\n591.36 0 0 837.12 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 15 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
-                                3 * pno),
-                        b'q\n595.2 0 0 841.92 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
-                                3 * pno),
-                        b'q\n578.16 0 0 824.4 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 9 44 cm\nDo\nQ\nQ\nq\nQ\n' % (
-                                3 * pno),
-                        b'q\n842.4 0 0 595.26 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n0 -1 1 0 0 595.26 cm\n/Xi%d gs\nq\n560 0 0 384 140 21 cm\nDo\nQ\nQ\nq\nQ\n' % (
-                                3 * pno),
-                        b'q\n/GS1 gs\n0 g\nBT\n/TT2 1 Tf\n10.5 0 0 10.5 90 758.4803 Tm\n( ) Tj\nET\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
-                                3 * pno),
-                        b'q\n.000006167 0 413.88 595.32 re\nW*\nn\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 0 21 cm\nDo\nQ\nQ\nq\nQ\n' % (
-                                3 * pno),
-                        b'q\n/Part <</MCID 0>> BDC\n595.44 0 0 842.04 0 0 cm\n/Im1 Do\nQ\nEMC\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
-                                3 * pno),
-                        b'q\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
-                        b'q\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
-                        b'q\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 315 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
-                        b'q\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 315 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
-                        b'q\n/CS0 cs\n0 0 0 0 scn\n/GS0 gs\n0 0 595.3 841.9 re\nf\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 315 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
-                        b'q\n0 0 595.32 841.919 re\n/CS0 cs\n1 1 1 scn\nf\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
-                    ]
-                    if cont in emptyCont:
-                        delete_page_ids.append(pno)
+                    # emptyCont = [
+                    #     b'q\n587.52 0 0 829.44 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 44 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                    #             3 * pno),
+                    #     b'q\n596.16006 0 0 841.86007 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                    #             3 * pno),
+                    #     b'q\n587.52 0 0 840.96 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 13 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                    #             3 * pno),
+                    #     b'q\n591.36 0 0 837.12 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 15 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                    #             3 * pno),
+                    #     b'q\n595.2 0 0 841.92 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                    #             3 * pno),
+                    #     b'q\n578.16 0 0 824.4 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 9 44 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                    #             3 * pno),
+                    #     b'q\n842.4 0 0 595.26 0 0 cm\n/Im1 Do\nQ\nq\nQ\nq\n0 -1 1 0 0 595.26 cm\n/Xi%d gs\nq\n560 0 0 384 140 21 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                    #             3 * pno),
+                    #     b'q\n/GS1 gs\n0 g\nBT\n/TT2 1 Tf\n10.5 0 0 10.5 90 758.4803 Tm\n( ) Tj\nET\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                    #             3 * pno),
+                    #     b'q\n.000006167 0 413.88 595.32 re\nW*\nn\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 0 21 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                    #             3 * pno),
+                    #     b'q\n/Part <</MCID 0>> BDC\n595.44 0 0 842.04 0 0 cm\n/Im1 Do\nQ\nEMC\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (
+                    #             3 * pno),
+                    #     b'q\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
+                    #     b'q\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
+                    #     b'q\nQ\nq\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 315 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
+                    #     b'q\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 315 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
+                    #     b'q\n/CS0 cs\n0 0 0 0 scn\n/GS0 gs\n0 0 595.3 841.9 re\nf\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 315 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
+                    #     b'q\n0 0 595.32 841.919 re\n/CS0 cs\n1 1 1 scn\nf\nQ\nq\n/Xi%d gs\nq\n560 0 0 384 17 45 cm\nDo\nQ\nQ\nq\nQ\n' % (3 * pno),
+                    # ]
+                    # if cont in emptyCont:
+                    #     delete_page_ids.append(pno)
 
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):

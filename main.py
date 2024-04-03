@@ -102,9 +102,9 @@ def remove_pdf_watermark():
                     #     exit(1)
 
                     # 记录要删除空白页
-                    emptyCont = [b'', b'q\nQ\n', b'q\nQ\nq\n', b'q\nQ\nq\nQ\nq\nQ\n', b'q\nQ\nq\nQ\nq\n']
-                    if cont in emptyCont:
-                        delete_page_ids.append(pno)
+                    # emptyCont = [b'', b'q\nQ\n', b'q\nQ\nq\n', b'q\nQ\nq\nQ\nq\nQ\n', b'q\nQ\nq\nQ\nq\n']
+                    # if cont in emptyCont:
+                    #     delete_page_ids.append(pno)
 
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
