@@ -113,7 +113,7 @@ def remove_pdf_watermark():
                 if len(delete_page_ids):
                     doc.delete_pages(delete_page_ids)
                 doc.save(pdf_new_file)
-                if doc.page_count < 5:
+                if doc.page_count < 3:
                     print("删除文件222")
                     os.remove(pdf_file)
                     os.remove(pdf_new_file)
