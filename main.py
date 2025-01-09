@@ -45,6 +45,7 @@ def remove_pdf_watermark():
                     # if content.find('版权所有') > 0:
                     #     print("版权所有字样---跳过")
                     #     break
+
                     # 查看是否有"不得翻印"字样
                     # if content.find('不得翻印') > 0:
                     #     print("不得翻印字样---跳过")

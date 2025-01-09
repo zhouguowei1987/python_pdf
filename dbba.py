@@ -31,28 +31,23 @@ def remove_pdf_watermark():
                     page = doc[pno]
 
                     # 查看是否有"版权所有"字样
-                    content = page.get_text('text')
-                    if content.find('版权所有') > 0:
-                        is_save_new_file = False
-                        print("版权所有字样---跳过")
-                        break
-                    # 查看是否有"版权专有"字样
-                    content = page.get_text('text')
-                    if content.find('版权专有') > 0:
-                        is_save_new_file = False
-                        print("版权专有字样---跳过")
-                        break
-                    # 查看是否有"侵权必究"字样
-                    content = page.get_text('text')
-                    if content.find('侵权必究') > 0:
-                        is_save_new_file = False
-                        print("侵权必究字样---跳过")
-                        break
+                    # content = page.get_text('text')
+                    # if content.find('版权所有') > 0:
+                    #     is_save_new_file = False
+                    #     print("版权所有字样---跳过")
+                    #     break
+
+                    # content = page.get_text('text')
+                    # if content.find('侵权必究') > 0:
+                    #     is_save_new_file = False
+                    #     print("侵权必究字样---跳过")
+                    #     break
+
                     # 查看是否有"不得翻印"字样
-                    if content.find('不得翻印') > 0:
-                        is_save_new_file = False
-                        print("不得翻印字样---跳过")
-                        break
+                    # if content.find('不得翻印') > 0:
+                    #     is_save_new_file = False
+                    #     print("不得翻印字样---跳过")
+                    #     break
 
                     page.clean_contents()
                     xref = page.get_contents()[0]
