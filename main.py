@@ -26,14 +26,14 @@ def remove_pdf_watermark():
 
                 if os.path.exists(pdf_new_file):
                     print("文件已存在-删除文件")
-                    os.remove(pdf_file)
+                    # os.remove(pdf_file)
                     continue
 
                 doc = fitz.open(pdf_file)
 
                 if len(doc[0].get_text('dict')) <= 0:
                     print("删除文件111")
-                    os.remove(pdf_file)
+                    # os.remove(pdf_file)
                     continue
 
                 # 记录需要删除页面id
@@ -116,16 +116,16 @@ def remove_pdf_watermark():
                 doc.save(pdf_new_file)
                 if doc.page_count < 3:
                     print("删除文件222")
-                    os.remove(pdf_file)
+                    # os.remove(pdf_file)
                     os.remove(pdf_new_file)
                     continue
                 doc.close()
                 print("删除源文件")
-                os.remove(pdf_file)
+                # os.remove(pdf_file)
             except Exception as e:
                 print(e)
                 print("删除文件333")
-                os.remove(pdf_file)
+                # os.remove(pdf_file)
 
 
 if __name__ == '__main__':
