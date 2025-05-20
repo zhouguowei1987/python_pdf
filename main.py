@@ -26,14 +26,14 @@ def remove_pdf_watermark():
 
                 if os.path.exists(pdf_new_file):
                     print("文件已存在-删除文件")
-                    # os.remove(pdf_file)
+                    os.remove(pdf_file)
                     continue
 
                 doc = fitz.open(pdf_file)
 
                 if len(doc[0].get_text('dict')) <= 0:
                     print("删除文件111")
-                    # os.remove(pdf_file)
+                    os.remove(pdf_file)
                     continue
 
                 # 记录需要删除页面id
@@ -55,23 +55,30 @@ def remove_pdf_watermark():
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
 
-                    # if pno == 2:
+                    # if pno == 0:
                     #     print(cont)
                     #     exit(1)
 
                     # 删除全国标准信息平台文字
                     i1 = cont.find(b'/Xi%d' % (2 * pno))
                     if i1 >= 0:
-                        i2 = cont.find(b"Tj\nET\nQ\nq\nQ\n", i1)
+                        i2 = cont.find(b"Tj ET Q q Q q", i1)
                         if i2 >= 0:
-                            cont[i1: i2 + 12] = b""
+                            cont[i1: i2 + 13] = b""
 
                     # 删除全国标准信息平台文字
-                    i3 = cont.find(b'/Xi%d' % (2 * pno + 2))
+                    i3 = cont.find(b'/Xi%d' % (2 * pno + 1))
                     if i3 >= 0:
-                        i4 = cont.find(b"Tj\nET\nQ\nq\nQ\n", i3)
+                        i4 = cont.find(b"Tj ET Q q Q", i3)
                         if i4 >= 0:
-                            cont[i3: i4 + 12] = b""
+                            cont[i3: i4 + 11] = b""
+
+                    # 删除全国标准信息平台文字
+                    i5 = cont.find(b'/Xi%d' % (2 * pno + 3))
+                    if i5 >= 0:
+                        i6 = cont.find(b"Tj ET Q q Q", i5)
+                        if i6 >= 0:
+                            cont[i5: i6 + 11] = b""
 
                     # 删除全国标准信息平台图片1
                     im1 = cont.find(b'/Im1')
@@ -98,15 +105,6 @@ def remove_pdf_watermark():
                     #     if w2 >= 0:
                     #         cont[w1: w2 + 3] = b""
 
-                    # if pno == 2:
-                    #     print(cont)
-                    #     exit(1)
-
-                    # 记录要删除空白页
-                    # emptyCont = [b'', b'q\nQ\n', b'q\nQ\nq\n', b'q\nQ\nq\nQ\nq\nQ\n', b'q\nQ\nq\nQ\nq\n']
-                    # if cont in emptyCont:
-                    #     delete_page_ids.append(pno)
-
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
@@ -116,16 +114,16 @@ def remove_pdf_watermark():
                 doc.save(pdf_new_file)
                 if doc.page_count < 3:
                     print("删除文件222")
-                    # os.remove(pdf_file)
+                    os.remove(pdf_file)
                     os.remove(pdf_new_file)
                     continue
                 doc.close()
                 print("删除源文件")
-                # os.remove(pdf_file)
+                os.remove(pdf_file)
             except Exception as e:
                 print(e)
                 print("删除文件333")
-                # os.remove(pdf_file)
+                os.remove(pdf_file)
 
 
 if __name__ == '__main__':
