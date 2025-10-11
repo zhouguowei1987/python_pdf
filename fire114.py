@@ -18,6 +18,7 @@ def remove_pdf_watermark():
             try:
                 pdf_new_file = '../upload.doc88.com/www.fire114.cn/' + file
                 pdf_new_file = pdf_new_file.replace("：", "-")
+                pdf_new_file = pdf_new_file.replace("+", "-")
                 pdf_new_file = pdf_new_file.replace("(已过期)", "")
                 pdf_new_file = pdf_new_file.replace("《", "")
                 pdf_new_file = pdf_new_file.replace("》", "")
