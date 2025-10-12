@@ -23,6 +23,8 @@ def remove_pdf_watermark():
                 pdf_new_file = pdf_new_file.replace("》", "")
                 pdf_new_file = pdf_new_file.replace("（", "")
                 pdf_new_file = pdf_new_file.replace("）", "")
+                pdf_new_file = pdf_new_file.replace("/", "-")
+                pdf_new_file = pdf_new_file.replace(" ", "")
 
                 if os.path.exists(pdf_new_file):
                     print("文件已存在-删除文件")
