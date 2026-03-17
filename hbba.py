@@ -9,7 +9,7 @@ import os
 
 # 去除pdf的水印
 def remove_pdf_watermark():
-    pdf_dir = "../temp-dbba.sacinfo.org.cn/"
+    pdf_dir = "../temp-hbba.sacinfo.org.cn/"
     files = sorted(os.listdir(pdf_dir))
     for file in files:
         is_save_new_file = True
@@ -23,7 +23,7 @@ def remove_pdf_watermark():
                     print("删除文件111")
                     os.remove(pdf_file)
                     continue
-                pdf_new_file = '../upload.doc88.com/dbba.sacinfo.org.cn/' + file
+                pdf_new_file = '../upload.doc88.com/hbba.sacinfo.org.cn/' + file
 
                 # 记录需要删除页面id
                 delete_page_ids = []

@@ -9,15 +9,14 @@ import os
 
 # 去除pdf的水印
 def remove_pdf_watermark():
-    pdf_dir = "../temp-www.ttbz.org.cn/"
+    pdf_dir = "../temp-www.hnbzw.com/"
     files = sorted(os.listdir(pdf_dir))
     for file in files:
         if ".pdf" in file:
             print(file)
             pdf_file = pdf_dir + file
             try:
-                pdf_new_file = '../upload.doc88.com/finish-www.ttbz.org.cn/' + file.replace(
-                    file.split("-")[0].replace(" ", "") + "-", "")
+                pdf_new_file = '../upload.doc88.com/dbba.sacinfo.org.cn/' + file
                 pdf_new_file = pdf_new_file.replace("：", "-")
                 pdf_new_file = pdf_new_file.replace("《", "")
                 pdf_new_file = pdf_new_file.replace("》", "")
@@ -59,28 +58,28 @@ def remove_pdf_watermark():
                     #     print(cont)
                     #     exit(1)
 
-                    # 删除全国标准信息平台文字
+                    # 删除山东省地方标准公开文字
                     i1 = cont.find(b'/Xi%d' % (2 * pno))
                     if i1 >= 0:
                         i2 = cont.find(b"Tj ET Q q Q q", i1)
                         if i2 >= 0:
                             cont[i1: i2 + 13] = b""
 
-                    # 删除全国标准信息平台文字
+                    # 删除山东省地方标准公开文字
                     i3 = cont.find(b'/Xi%d' % (2 * pno + 1))
                     if i3 >= 0:
                         i4 = cont.find(b"Tj ET Q q Q", i3)
                         if i4 >= 0:
                             cont[i3: i4 + 11] = b""
 
-                    # 删除全国标准信息平台文字
+                    # 删除山东省地方标准公开文字
                     i5 = cont.find(b'/Xi%d' % (2 * pno + 3))
                     if i5 >= 0:
                         i6 = cont.find(b"Tj ET Q q Q", i5)
                         if i6 >= 0:
                             cont[i5: i6 + 11] = b""
 
-                    # 删除全国标准信息平台图片1
+                    # 删除山东省地方标准公开图片1
                     im1 = cont.find(b'/Im1')
                     if im1 >= 0:
                         start_im1 = cont.rfind(b'q\n/GS1 gs\n344 0 0 73', 0, im1)
@@ -89,7 +88,7 @@ def remove_pdf_watermark():
                         im2 = cont.find(b"Do\nQ\n", im1)
                         cont[start_im1: im2 + 5] = b""
 
-                    # 删除全国标准信息平台图片2
+                    # 删除山东省地方标准公开图片2
                     im3 = cont.find(b'/Im2')
                     if im3 >= 0:
                         start_im3 = cont.rfind(b'q\n/GS0 gs\n344 0 0 73', 0, im3)
