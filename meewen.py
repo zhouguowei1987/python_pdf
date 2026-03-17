@@ -22,7 +22,15 @@ def remove_pdf_watermark():
                     if not os.path.exists(pdf_new_dir):
                         os.makedirs(pdf_new_dir)
 
-                    pdf_new_file = pdf_new_dir + file.replace("／", "-")
+                    sub_file = file
+                    sub_file = sub_file.replace(".pdf","")
+                    point_flag_index = sub_file.find(".")
+                    if point_flag_index != 0:
+                        sub_file = sub_file[point_flag_index + 1:]
+
+                    sub_file = sub_file + ".pdf"
+                    pdf_new_file = pdf_new_dir + sub_file.replace("／", "-")
+                    pdf_new_file = pdf_new_file.replace("：", "-")
                     pdf_new_file = pdf_new_file.replace("：", "-")
                     pdf_new_file = pdf_new_file.replace("+", "-")
                     pdf_new_file = pdf_new_file.replace("(已过期)", "")
@@ -38,13 +46,10 @@ def remove_pdf_watermark():
                         page = doc[pno]
                         if len(page.get_text()) <= 0:
                             delete_page_ids.append(pno)
-                        if page.get_text().find("公文搜——海量公文资料") != -1:
+                        if page.get_text().find("公文搜") != -1:
                             # 获取页眉区域（这里需要根据实际页眉位置进行调整）
                             # 例如，假设页眉在顶部2厘米，宽度为A4纸的宽度
-                            # print(page.rect.width)
-                            # print(page.rect.height)
-                            # exit(1)
-                            header_rect = fitz.Rect(0, 0, page.rect.width, page.rect.height - 760)
+                            header_rect = fitz.Rect(0, 0, page.rect.width, page.rect.height - 750)
                             # 删除页眉区域的内容
                             page.add_redact_annot(header_rect)
                             page.apply_redactions()
