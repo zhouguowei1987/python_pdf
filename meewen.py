@@ -9,7 +9,6 @@ import os
 
 # 去除pdf的水印
 def remove_pdf_watermark():
-
     category = ["专题讲稿", "领导讲话", "遴选题库", "公考素材", "表格合同"]
     for i in range(len(category)):
         pdf_dir = "../www.meewen.com/temp-www.meewen.com/"+category[i]+"/"
@@ -33,8 +32,12 @@ def remove_pdf_watermark():
                     pdf_new_file = pdf_new_file.replace("）", "")
 
                     doc = fitz.open(pdf_file)
-                    for page in doc:
-                        # print(page.get_text())
+                    # 记录需要删除页面id
+                    delete_page_ids = []
+                    for pno in range(doc.page_count):
+                        page = doc[pno]
+                        if len(page.get_text()) <= 0:
+                            delete_page_ids.append(pno)
                         if page.get_text().find("公文搜——海量公文资料") != -1:
                             # 获取页眉区域（这里需要根据实际页眉位置进行调整）
                             # 例如，假设页眉在顶部2厘米，宽度为A4纸的宽度
@@ -45,7 +48,8 @@ def remove_pdf_watermark():
                             # 删除页眉区域的内容
                             page.add_redact_annot(header_rect)
                             page.apply_redactions()
-
+                    if len(delete_page_ids):
+                        doc.delete_pages(delete_page_ids)
                     doc.save(pdf_new_file)
                     doc.close()
                     print("删除源文件")
