@@ -9,14 +9,14 @@ import os
 
 # 去除pdf的水印
 def remove_pdf_watermark():
-    pdf_dir = "../www.gwsoso.com/temp-www.gwsoso.com/"
+    pdf_dir = "D:\\workspace\\www.gwsoso.com\\temp-www.gwsoso.com\\"
     files = sorted(os.listdir(pdf_dir))
     for file in files:
         if ".pdf" in file:
             print(file)
             pdf_file = pdf_dir + file
             try:
-                pdf_new_dir = "../www.gwsoso.com/2026-03-19/"
+                pdf_new_dir = "D:\\workspace\\www.gwsoso.com\\2026-04-05\\"
                 if not os.path.exists(pdf_new_dir):
                     os.makedirs(pdf_new_dir)
 
