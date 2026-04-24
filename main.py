@@ -43,8 +43,9 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-                    # print(cont)
-                    # exit(1)
+                    # if pno == 1:
+                    #     print(cont)
+                    #     exit(1)
                     # print("===============================================")
                     #
                     # # 删除全国标准信息平台文字
@@ -104,12 +105,16 @@ def remove_pdf_watermark():
                     if im5_4 > 0:
                         im5 = im5_4
 
+                    im5_5 = cont.find(b'/Im5')
+                    if im5_5 > 0:
+                        im5 = im5_5
+
                     if im5 > 0:
-                        start_im5 = cont.rfind(b'/GS13', 0, im5)
+                        # start_im5 = cont.rfind(b'/GS13', 0, im5)
                         # print(start_im5)
                         # exit(1)
                         im6 = cont.find(b" Do Q q Q", im5)
-                        cont[start_im5: im6 + 9] = b""
+                        cont[im5: im6 + 9] = b""
 
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
