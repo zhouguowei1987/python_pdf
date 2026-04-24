@@ -24,10 +24,10 @@ def remove_pdf_watermark():
                 pdf_new_file = pdf_new_file.replace("（", "")
                 pdf_new_file = pdf_new_file.replace("）", "")
 
-                if os.path.exists(pdf_new_file):
-                    print("文件已存在-删除文件")
-                    os.remove(pdf_file)
-                    continue
+                # if os.path.exists(pdf_new_file):
+                #     print("文件已存在-删除文件")
+                #     os.remove(pdf_file)
+                #     continue
 
                 doc = fitz.open(pdf_file)
 
@@ -54,56 +54,64 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
+                    # print("===============================================")
+                    #
+                    # # 删除全国标准信息平台文字
+                    # i1 = cont.find(b'/Xi%d' % (2 * pno))
+                    # if i1 >= 0:
+                    #     i2 = cont.find(b"Tj ET Q q Q q", i1)
+                    #     if i2 >= 0:
+                    #         cont[i1: i2 + 13] = b""
+                    #
+                    # # 删除全国标准信息平台文字
+                    # i3 = cont.find(b'/Xi%d' % (2 * pno + 1))
+                    # if i3 >= 0:
+                    #     i4 = cont.find(b"Tj ET Q q Q", i3)
+                    #     if i4 >= 0:
+                    #         cont[i3: i4 + 11] = b""
+                    #
+                    # # 删除全国标准信息平台文字
+                    # i5 = cont.find(b'/Xi%d' % (2 * pno + 3))
+                    # if i5 >= 0:
+                    #     i6 = cont.find(b"Tj ET Q q Q", i5)
+                    #     if i6 >= 0:
+                    #         cont[i5: i6 + 11] = b""
+                    #
+                    # # 删除全国标准信息平台图片1
+                    # im1 = cont.find(b'/Im1')
+                    # if im1 >= 0:
+                    #     start_im1 = cont.rfind(b'q\n/GS1 gs\n344 0 0 73', 0, im1)
+                    #     if start_im1 < 0:
+                    #         start_im1 = cont.rfind(b'q\n/GS2 gs\n344 0 0 73', 0, im1)
+                    #     im2 = cont.find(b"Do\nQ\n", im1)
+                    #     cont[start_im1: im2 + 5] = b""
+                    #
+                    # # 删除全国标准信息平台图片2
+                    # im3 = cont.find(b'/Im2')
+                    # if im3 >= 0:
+                    #     start_im3 = cont.rfind(b'q\n/GS0 gs\n344 0 0 73', 0, im3)
+                    #     if start_im3 < 0:
+                    #         start_im3 = cont.rfind(b'q\n/GS1 gs\n344 0 0 73', 0, im3)
+                    #     im4 = cont.find(b"Do\nQ\n", im3)
+                    #     cont[start_im3: im4 + 5] = b""
 
-                    # if pno == 0:
-                    #     print(cont)
-                    #     exit(1)
+                    # 删除新版全国标准信息平台图片-带个人证件信息2
+                    im5 = cont.find(b'/Im1')
+                    if im5 >= 0:
+                        start_im5 = cont.rfind(b'/GS13', 0, im5)
+                        # print(start_im5)
+                        # exit(1)
+                        im6 = cont.find(b" Do Q q Q", im5)
+                        cont[start_im5: im6 + 9] = b""
 
-                    # 删除全国标准信息平台文字
-                    i1 = cont.find(b'/Xi%d' % (2 * pno))
-                    if i1 >= 0:
-                        i2 = cont.find(b"Tj ET Q q Q q", i1)
-                        if i2 >= 0:
-                            cont[i1: i2 + 13] = b""
-
-                    # 删除全国标准信息平台文字
-                    i3 = cont.find(b'/Xi%d' % (2 * pno + 1))
-                    if i3 >= 0:
-                        i4 = cont.find(b"Tj ET Q q Q", i3)
-                        if i4 >= 0:
-                            cont[i3: i4 + 11] = b""
-
-                    # 删除全国标准信息平台文字
-                    i5 = cont.find(b'/Xi%d' % (2 * pno + 3))
-                    if i5 >= 0:
-                        i6 = cont.find(b"Tj ET Q q Q", i5)
-                        if i6 >= 0:
-                            cont[i5: i6 + 11] = b""
-
-                    # 删除全国标准信息平台图片1
-                    im1 = cont.find(b'/Im1')
-                    if im1 >= 0:
-                        start_im1 = cont.rfind(b'q\n/GS1 gs\n344 0 0 73', 0, im1)
-                        if start_im1 < 0:
-                            start_im1 = cont.rfind(b'q\n/GS2 gs\n344 0 0 73', 0, im1)
-                        im2 = cont.find(b"Do\nQ\n", im1)
-                        cont[start_im1: im2 + 5] = b""
-
-                    # 删除全国标准信息平台图片2
-                    im3 = cont.find(b'/Im2')
-                    if im3 >= 0:
-                        start_im3 = cont.rfind(b'q\n/GS0 gs\n344 0 0 73', 0, im3)
-                        if start_im3 < 0:
-                            start_im3 = cont.rfind(b'q\n/GS1 gs\n344 0 0 73', 0, im3)
-                        im4 = cont.find(b"Do\nQ\n", im3)
-                        cont[start_im3: im4 + 5] = b""
-
-                    # 删除ZZB-T标准水印
-                    # w1 = cont.rfind(b'/Artifact')
-                    # if w1 >= 0:
-                    #     w2 = cont.find(b"EMC", w1)
-                    #     if w2 >= 0:
-                    #         cont[w1: w2 + 3] = b""
+                    # 删除新版全国标准信息平台图片-带个人证件信息2
+                    im7 = cont.find(b'/Im2')
+                    if im7 >= 0:
+                        start_im7 = cont.rfind(b'/GS13', 0, im7)
+                        # print(start_im7)
+                        # exit(1)
+                        im8 = cont.find(b" Do Q q Q", im7)
+                        cont[start_im7: im8 + 9] = b""
 
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
