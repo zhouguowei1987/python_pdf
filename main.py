@@ -110,9 +110,6 @@ def remove_pdf_watermark():
                         im5 = im5_5
 
                     if im5 > 0:
-                        # start_im5 = cont.rfind(b'/GS13', 0, im5)
-                        # print(start_im5)
-                        # exit(1)
                         im6 = cont.find(b" Do Q q Q", im5)
                         cont[im5: im6 + 9] = b""
 
