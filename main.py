@@ -26,34 +26,25 @@ def remove_pdf_watermark():
 
                 # if os.path.exists(pdf_new_file):
                 #     print("文件已存在-删除文件")
-                #     os.remove(pdf_file)
+                #     # os.remove(pdf_file)
                 #     continue
 
                 doc = fitz.open(pdf_file)
 
                 if len(doc[0].get_text('dict')) <= 0:
                     print("删除文件111")
-                    os.remove(pdf_file)
+                    # os.remove(pdf_file)
                     continue
 
                 # 记录需要删除页面id
                 delete_page_ids = []
                 for pno in range(doc.page_count):
                     page = doc[pno]
-                    # 查看是否有"版权所有"字样
-                    # content = page.get_text('text')
-                    # if content.find('版权所有') > 0:
-                    #     print("版权所有字样---跳过")
-                    #     break
-
-                    # 查看是否有"不得翻印"字样
-                    # if content.find('不得翻印') > 0:
-                    #     print("不得翻印字样---跳过")
-                    #     break
-
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
+                    # print(cont)
+                    # exit(1)
                     # print("===============================================")
                     #
                     # # 删除全国标准信息平台文字
@@ -96,22 +87,29 @@ def remove_pdf_watermark():
                     #     cont[start_im3: im4 + 5] = b""
 
                     # 删除新版全国标准信息平台图片-带个人证件信息2
-                    im5 = cont.find(b'/Im1')
-                    if im5 >= 0:
+                    im5 = 0
+                    im5_1 = cont.find(b'/Im1')
+                    if im5_1 > 0:
+                        im5 = im5_1
+
+                    im5_2 = cont.find(b'/Im2')
+                    if im5_2 > 0:
+                        im5 = im5_2
+
+                    im5_3 = cont.find(b'/Im3')
+                    if im5_3 > 0:
+                        im5 = im5_3
+
+                    im5_4 = cont.find(b'/Im4')
+                    if im5_4 > 0:
+                        im5 = im5_4
+
+                    if im5 > 0:
                         start_im5 = cont.rfind(b'/GS13', 0, im5)
                         # print(start_im5)
                         # exit(1)
                         im6 = cont.find(b" Do Q q Q", im5)
                         cont[start_im5: im6 + 9] = b""
-
-                    # 删除新版全国标准信息平台图片-带个人证件信息2
-                    im7 = cont.find(b'/Im2')
-                    if im7 >= 0:
-                        start_im7 = cont.rfind(b'/GS13', 0, im7)
-                        # print(start_im7)
-                        # exit(1)
-                        im8 = cont.find(b" Do Q q Q", im7)
-                        cont[start_im7: im8 + 9] = b""
 
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
@@ -122,16 +120,16 @@ def remove_pdf_watermark():
                 doc.save(pdf_new_file)
                 if doc.page_count < 3:
                     print("删除文件222")
-                    os.remove(pdf_file)
+                    # os.remove(pdf_file)
                     os.remove(pdf_new_file)
                     continue
                 doc.close()
                 print("删除源文件")
-                os.remove(pdf_file)
+                # os.remove(pdf_file)
             except Exception as e:
                 print(e)
                 # print("删除文件333")
-                # os.remove(pdf_file)
+                # # os.remove(pdf_file)
 
 
 if __name__ == '__main__':
