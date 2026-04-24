@@ -130,8 +130,8 @@ def remove_pdf_watermark():
                 os.remove(pdf_file)
             except Exception as e:
                 print(e)
-                print("删除文件333")
-                os.remove(pdf_file)
+                # print("删除文件333")
+                # os.remove(pdf_file)
 
 
 if __name__ == '__main__':
