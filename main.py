@@ -43,32 +43,32 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-                    # if pno == 5:
+                    # if pno == 0:
                     #     print(cont)
                     #     exit(1)
                     # print("===============================================")
-                    #
-                    # # 删除全国标准信息平台文字
-                    # i1 = cont.find(b'/Xi%d' % (2 * pno))
-                    # if i1 >= 0:
-                    #     i2 = cont.find(b"Tj ET Q q Q q", i1)
-                    #     if i2 >= 0:
-                    #         cont[i1: i2 + 13] = b""
-                    #
-                    # # 删除全国标准信息平台文字
-                    # i3 = cont.find(b'/Xi%d' % (2 * pno + 1))
-                    # if i3 >= 0:
-                    #     i4 = cont.find(b"Tj ET Q q Q", i3)
-                    #     if i4 >= 0:
-                    #         cont[i3: i4 + 11] = b""
-                    #
-                    # # 删除全国标准信息平台文字
-                    # i5 = cont.find(b'/Xi%d' % (2 * pno + 3))
-                    # if i5 >= 0:
-                    #     i6 = cont.find(b"Tj ET Q q Q", i5)
-                    #     if i6 >= 0:
-                    #         cont[i5: i6 + 11] = b""
-                    #
+
+                    # 删除全国标准信息平台文字
+                    i1 = cont.find(b'/Xi%d' % (2 * pno))
+                    if i1 >= 0:
+                        i2 = cont.find(b"Tj ET Q q", i1)
+                        if i2 >= 0:
+                            cont[i1: i2 + 9] = b""
+
+                    # 删除全国标准信息平台文字
+                    i3 = cont.find(b'/Xi%d' % (2 * pno + 1))
+                    if i3 >= 0:
+                        i4 = cont.find(b"Tj ET Q q", i3)
+                        if i4 >= 0:
+                            cont[i3: i4 + 9] = b""
+
+                    # 删除全国标准信息平台文字
+                    i5 = cont.find(b'/Xi%d' % (2 * pno + 3))
+                    if i5 >= 0:
+                        i6 = cont.find(b"Tj ET Q q Q", i5)
+                        if i6 >= 0:
+                            cont[i5: i6 + 11] = b""
+
                     # # 删除全国标准信息平台图片1
                     # im1 = cont.find(b'/Im1')
                     # if im1 >= 0:
