@@ -43,7 +43,7 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-                    # if pno == 1:
+                    # if pno == 5:
                     #     print(cont)
                     #     exit(1)
                     # print("===============================================")
@@ -109,10 +109,32 @@ def remove_pdf_watermark():
                     if im5_5 > 0:
                         im5 = im5_5
 
+                    im5_6 = cont.find(b'/Im6')
+                    if im5_6 > 0:
+                        im5 = im5_6
+
+                    im5_7 = cont.find(b'/Im7')
+                    if im5_7 > 0:
+                        im5 = im5_7
+
+                    im5_8 = cont.find(b'/Im8')
+                    if im5_8 > 0:
+                        im5 = im5_8
+
+                    im5_9 = cont.find(b'/Im9')
+                    if im5_9 > 0:
+                        im5 = im5_9
+
+                    im5_10 = cont.find(b'/Im10')
+                    if im5_10 > 0:
+                        im5 = im5_10
+
                     if im5 > 0:
                         im6 = cont.find(b" Do Q q Q", im5)
                         cont[im5: im6 + 9] = b""
-
+                        if im6 < 0:
+                            im6 = cont.find(b" Do Q", im5)
+                            cont[im5: im6 + 5] = b""
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
@@ -130,6 +152,7 @@ def remove_pdf_watermark():
                 os.remove(pdf_file)
             except Exception as e:
                 print(e)
+                # exit(1)
                 # print("删除文件333")
                 # os.remove(pdf_file)
 
