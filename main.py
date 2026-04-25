@@ -2,6 +2,7 @@
 # @Time   : 2022-02-23
 # @Author : carl_DJ
 import json
+import struct
 
 import fitz
 import os
@@ -16,8 +17,9 @@ def remove_pdf_watermark():
             print(file)
             pdf_file = pdf_dir + file
             try:
-                pdf_new_file = '../upload.doc88.com/finish-www.ttbz.org.cn/' + file.replace(
-                    file.split("-")[0].replace(" ", "") + "-", "")
+                # pdf_new_file = '../upload.doc88.com/finish-www.ttbz.org.cn/' + file.replace(
+                #     file.split("-")[0].replace(" ", "") + "-", "")
+                pdf_new_file = '../upload.doc88.com/finish-www.ttbz.org.cn/' + file
                 pdf_new_file = pdf_new_file.replace("：", "-")
                 pdf_new_file = pdf_new_file.replace("《", "")
                 pdf_new_file = pdf_new_file.replace("》", "")
@@ -43,7 +45,7 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-                    # if pno == 0:
+                    # if pno == 2:
                     #     print(cont)
                     #     exit(1)
                     # print("===============================================")
@@ -89,45 +91,11 @@ def remove_pdf_watermark():
 
                     # 删除新版全国标准信息平台图片-带个人证件信息2
                     im5 = 0
-                    im5_1 = cont.find(b'/Im1')
-                    if im5_1 > 0:
-                        im5 = im5_1
-
-                    im5_2 = cont.find(b'/Im2')
-                    if im5_2 > 0:
-                        im5 = im5_2
-
-                    im5_3 = cont.find(b'/Im3')
-                    if im5_3 > 0:
-                        im5 = im5_3
-
-                    im5_4 = cont.find(b'/Im4')
-                    if im5_4 > 0:
-                        im5 = im5_4
-
-                    im5_5 = cont.find(b'/Im5')
-                    if im5_5 > 0:
-                        im5 = im5_5
-
-                    im5_6 = cont.find(b'/Im6')
-                    if im5_6 > 0:
-                        im5 = im5_6
-
-                    im5_7 = cont.find(b'/Im7')
-                    if im5_7 > 0:
-                        im5 = im5_7
-
-                    im5_8 = cont.find(b'/Im8')
-                    if im5_8 > 0:
-                        im5 = im5_8
-
-                    im5_9 = cont.find(b'/Im9')
-                    if im5_9 > 0:
-                        im5 = im5_9
-
-                    im5_10 = cont.find(b'/Im10')
-                    if im5_10 > 0:
-                        im5 = im5_10
+                    for num in range(1, 100):
+                        byte_num = str(num).encode('utf-8')  # 字符串编码为字节
+                        im5 = cont.find(b'/Im'+byte_num)
+                        if im5 > 0:
+                            break
 
                     if im5 > 0:
                         im6 = cont.find(b" Do Q q Q", im5)
@@ -142,11 +110,11 @@ def remove_pdf_watermark():
                 if len(delete_page_ids):
                     doc.delete_pages(delete_page_ids)
                 doc.save(pdf_new_file)
-                if doc.page_count < 3:
-                    print("删除文件222")
-                    os.remove(pdf_file)
-                    os.remove(pdf_new_file)
-                    continue
+                # if doc.page_count < 3:
+                #     print("删除文件222")
+                #     os.remove(pdf_file)
+                #     os.remove(pdf_new_file)
+                #     continue
                 doc.close()
                 print("删除源文件")
                 os.remove(pdf_file)
