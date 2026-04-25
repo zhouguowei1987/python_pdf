@@ -17,9 +17,8 @@ def remove_pdf_watermark():
             print(file)
             pdf_file = pdf_dir + file
             try:
-                # pdf_new_file = '../upload.doc88.com/finish-www.ttbz.org.cn/' + file.replace(
-                #     file.split("-")[0].replace(" ", "") + "-", "")
-                pdf_new_file = '../upload.doc88.com/finish-www.ttbz.org.cn/' + file
+                pdf_new_file = '../upload.doc88.com/finish-www.ttbz.org.cn/' + file.replace(
+                    file.split("-")[0].replace(" ", "") + "-", "")
                 pdf_new_file = pdf_new_file.replace("：", "-")
                 pdf_new_file = pdf_new_file.replace("《", "")
                 pdf_new_file = pdf_new_file.replace("》", "")
