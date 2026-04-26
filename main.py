@@ -89,11 +89,16 @@ def remove_pdf_watermark():
                     #     cont[start_im3: im4 + 5] = b""
 
                     # 删除新版全国标准信息平台图片-带个人证件信息2
-                    im5 = 0
+                    im_find_flag = False
                     for num in range(1, 100):
+                        if im_find_flag:
+                            # 查找到最后一个Im，则停止，只找最后一次
+                            break
                         byte_num = str(num).encode('utf-8')  # 字符串编码为字节
-                        im5 = cont.find(b'/Im'+byte_num)
-                        if im5 > 0:
+                        im5 = cont.rfind(b'/Im')
+                        im5_num = cont.rfind(b'/Im'+byte_num)
+                        if im5 == im5_num and im5 > 0:
+                            im_find_flag = True
                             im6 = cont.find(b" Do Q q Q", im5)
                             cont[im5: im6 + 9] = b""
                             if im6 < 0:
