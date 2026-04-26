@@ -107,6 +107,7 @@ def remove_pdf_watermark():
                                 if im6 < 0:
                                     im6 = cont.find(b" Do Q Q", im5)
                                     cont[im5: im6 + 7] = b""
+                            break
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
