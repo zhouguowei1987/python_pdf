@@ -52,7 +52,7 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-                    # if pno == 14:
+                    # if pno == 5:
                     #     print(cont)
                     #     exit()
 
@@ -62,6 +62,15 @@ def remove_pdf_watermark():
                         im2 = cont.rfind(b"/Im", 0, im1)
                         if im2 >= 0:
                             cont[im2: im1] = b""
+
+                    # 删除湖南地方标准信息平台文字
+                    xiL = cont.rfind(b'/Xi'+str(pno+1).encode('utf-8'))
+                    if xiL <= 0:
+                        xiL = cont.rfind(b'/Xi' + str(2*pno + 1).encode('utf-8'))
+                    if xiL > 0:
+                        xiR = cont.find(b"Tj ET Q",  xiL)
+                        if xiR >= 0:
+                            cont[xiL: xiR+7] = b""
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
