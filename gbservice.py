@@ -1,0 +1,90 @@
+# -*- coding:utf-8 -*-
+# @Time   : 2022-02-23
+# @Author : carl_DJ
+import json
+import struct
+
+import fitz
+import os
+
+
+# 去除pdf的水印
+def remove_pdf_watermark():
+    pdf_dir = "../temp-gbservice.cn/"
+    files = sorted(os.listdir(pdf_dir))
+    for file in files:
+        if ".pdf" in file:
+            print(file)
+            pdf_file = pdf_dir + file
+            try:
+                pdf_new_file = '../upload.doc88.com/hbba.sacinfo.org.cn/' + file
+                pdf_new_file = pdf_new_file.replace("：", "-")
+                pdf_new_file = pdf_new_file.replace("《", "")
+                pdf_new_file = pdf_new_file.replace("》", "")
+                pdf_new_file = pdf_new_file.replace("（", "")
+                pdf_new_file = pdf_new_file.replace("）", "")
+
+                # if os.path.exists(pdf_new_file):
+                #     print("文件已存在-删除文件")
+                #     os.remove(pdf_file)
+                #     continue
+
+                doc = fitz.open(pdf_file)
+                if len(doc[0].get_text('dict')) <= 0:
+                    print("删除文件111")
+                    os.remove(pdf_file)
+                    continue
+
+                page0 = doc[0]
+                page0.clean_contents()
+                if len(bytearray(page0.read_contents())) <= 34:
+                    print("图片pdf文件，删除")
+                    os.remove(pdf_file)
+                    continue
+
+                # 记录需要删除页面id
+                delete_page_ids = []
+                for pno in range(doc.page_count):
+                    page = doc[pno]
+                    page.clean_contents()
+                    xref = page.get_contents()[0]
+                    cont = bytearray(page.read_contents())
+                    # if pno == 2:
+                    #     print(cont)
+                    #     print(len(cont))
+                    #     exit(1)
+                    # print("===============================================")
+                    
+                    # 删除新版江苏建设科技服务网图片
+                    watermark_find_flag = True
+                    while watermark_find_flag:
+                        watermark_left = cont.rfind(b'/Artifact<</Type/Pagination/Subtype/Watermark>>BDC')
+                        watermark_right = cont.rfind(b'Do Q EMC')
+                        if watermark_left >= 0 and watermark_right >= 0:
+                            cont[watermark_left: watermark_right + 8] = b""
+                        else:
+                            watermark_find_flag = False
+                    doc.update_stream(xref, cont)
+                if os.path.exists(pdf_new_file):
+                    os.remove(pdf_new_file)
+
+                if len(delete_page_ids):
+                    doc.delete_pages(delete_page_ids)
+                doc.save(pdf_new_file)
+                # if doc.page_count < 3:
+                #     print("删除文件222")
+                #     os.remove(pdf_file)
+                #     os.remove(pdf_new_file)
+                #     continue
+                doc.close()
+                print("删除源文件")
+                os.remove(pdf_file)
+            except Exception as e:
+                print(e)
+                # exit(1)
+                # print("删除文件333")
+                # os.remove(pdf_file)
+
+
+if __name__ == '__main__':
+    remove_pdf_watermark()
