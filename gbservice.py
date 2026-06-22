@@ -2,6 +2,7 @@
 # @Time   : 2022-02-23
 # @Author : carl_DJ
 import json
+import struct
 
 import fitz
 import os
@@ -9,14 +10,14 @@ import os
 
 # 去除pdf的水印
 def remove_pdf_watermark():
-    pdf_dir = "../temp-www.hndb41.com/"
+    pdf_dir = "../temp-gbservice.cn/"
     files = sorted(os.listdir(pdf_dir))
     for file in files:
         if ".pdf" in file:
             print(file)
             pdf_file = pdf_dir + file
             try:
-                pdf_new_file = '../upload.doc88.com/dbba.sacinfo.org.cn/' + file
+                pdf_new_file = '../upload.doc88.com/hbba.sacinfo.org.cn/' + file
                 pdf_new_file = pdf_new_file.replace("：", "-")
                 pdf_new_file = pdf_new_file.replace("《", "")
                 pdf_new_file = pdf_new_file.replace("》", "")
@@ -29,9 +30,15 @@ def remove_pdf_watermark():
                 #     continue
 
                 doc = fitz.open(pdf_file)
-
                 if len(doc[0].get_text('dict')) <= 0:
                     print("删除文件111")
+                    os.remove(pdf_file)
+                    continue
+
+                page0 = doc[0]
+                page0.clean_contents()
+                if len(bytearray(page0.read_contents())) <= 34:
+                    print("图片pdf文件，删除")
                     os.remove(pdf_file)
                     continue
 
@@ -39,32 +46,24 @@ def remove_pdf_watermark():
                 delete_page_ids = []
                 for pno in range(doc.page_count):
                     page = doc[pno]
-                    # 查看是否有"版权所有"字样
-                    # content = page.get_text('text')
-                    # if content.find('版权所有') > 0:
-                    #     print("版权所有字样---跳过")
-                    #     break
-
-                    # 查看是否有"不得翻印"字样
-                    # if content.find('不得翻印') > 0:
-                    #     print("不得翻印字样---跳过")
-                    #     break
-
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-
                     # if pno == 2:
                     #     print(cont)
+                    #     print(len(cont))
                     #     exit(1)
-
-                    # 删除河南省地方标准公开文字
-                    i1 = cont.find(b'/Xi%d' % (2 * pno))
-                    if i1 >= 0:
-                        i2 = cont.find(b"Tj ET Q", i1)
-                        if i2 >= 0:
-                            cont[i1: i2 + 7] = b""
-
+                    # print("===============================================")
+                    
+                    # 删除新版江苏建设科技服务网图片
+                    watermark_find_flag = True
+                    while watermark_find_flag:
+                        watermark_left = cont.rfind(b'/Artifact<</Type/Pagination/Subtype/Watermark>>BDC')
+                        watermark_right = cont.rfind(b'Do Q EMC')
+                        if watermark_left >= 0 and watermark_right >= 0:
+                            cont[watermark_left: watermark_right + 8] = b""
+                        else:
+                            watermark_find_flag = False
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
@@ -72,18 +71,19 @@ def remove_pdf_watermark():
                 if len(delete_page_ids):
                     doc.delete_pages(delete_page_ids)
                 doc.save(pdf_new_file)
-                if doc.page_count < 5:
-                    print("删除文件222")
-                    os.remove(pdf_file)
-                    os.remove(pdf_new_file)
-                    continue
+                # if doc.page_count < 5:
+                #     print("删除文件222")
+                #     os.remove(pdf_file)
+                #     os.remove(pdf_new_file)
+                #     continue
                 doc.close()
                 print("删除源文件")
                 os.remove(pdf_file)
             except Exception as e:
                 print(e)
-                print("删除文件333")
-                os.remove(pdf_file)
+                # exit(1)
+                # print("删除文件333")
+                # os.remove(pdf_file)
 
 
 if __name__ == '__main__':
