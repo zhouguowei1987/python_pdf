@@ -16,7 +16,7 @@ def remove_pdf_watermark():
             print(file)
             pdf_file = pdf_dir + file
             try:
-                pdf_new_dir = "D:\\workspace\\www.gwsoso.com\\2026-04-05\\"
+                pdf_new_dir = "D:\\workspace\\www.gwsoso.com\\2026-05-03\\"
                 if not os.path.exists(pdf_new_dir):
                     os.makedirs(pdf_new_dir)
 

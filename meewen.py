@@ -11,14 +11,14 @@ import os
 def remove_pdf_watermark():
     category = ["专题讲稿", "领导讲话", "遴选题库", "公考素材", "表格合同"]
     for i in range(len(category)):
-        pdf_dir = "../www.meewen.com/temp-www.meewen.com/"+category[i]+"/"
+        pdf_dir = "D:\\workspace\\www.meewen.com\\temp-www.meewen.com\\"+category[i]+"\\"
         files = sorted(os.listdir(pdf_dir))
         for file in files:
             if ".pdf" in file:
                 print(file)
                 pdf_file = pdf_dir + file
                 try:
-                    pdf_new_dir = "../www.meewen.com/2026-03-17/"+category[i]+"/"
+                    pdf_new_dir = "E:\\workspace\\upload.doc88.com\\www.meewen.com\\"+category[i]+"\\"
                     if not os.path.exists(pdf_new_dir):
                         os.makedirs(pdf_new_dir)
 
