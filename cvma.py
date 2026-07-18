@@ -32,16 +32,17 @@ def remove_pdf_watermark():
                     page.clean_contents()
                     xref = page.get_contents()[0]
                     cont = bytearray(page.read_contents())
-                    # if pno == 0:
+                    # if pno == 1:
                     #     print(cont)
                     #     exit()
-
                     # 删除中国兽医协会水印
                     im1 = cont.rfind(b'/Fm0 Do Q EMC')
                     if im1 >= 0:
                         im2 = cont.rfind(b"/Artifact<</Type/Pagination/Subtype/Watermark>>", 0, im1)
                         if im2 >= 0:
-                            cont[im2: im1] = b""
+                            cont[im2: im1 + 13] = b""
+                        if pno == 1:
+                            print(cont)
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
