@@ -41,8 +41,6 @@ def remove_pdf_watermark():
                         im2 = cont.rfind(b"/Artifact<</Type/Pagination/Subtype/Watermark>>", 0, im1)
                         if im2 >= 0:
                             cont[im2: im1 + 13] = b""
-                        if pno == 1:
-                            print(cont)
                     doc.update_stream(xref, cont)
                 if os.path.exists(pdf_new_file):
                     os.remove(pdf_new_file)
